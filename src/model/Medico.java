@@ -17,6 +17,8 @@ public class Medico {
     
     private String nome;
     
+    private String especialidade;
+    
     private String crm;
     
     private String cpf;
@@ -28,14 +30,17 @@ public class Medico {
     public Medico() {
     }
 
-    public Medico(Long id, String nome, String crm, String cpf, String telefone, List<Consulta> consultas) {
+    public Medico(Long id, String nome, String especialidade, String crm, String cpf, String telefone, List<Consulta> consultas) {
         this.id = id;
         this.nome = nome;
+        this.especialidade = especialidade;
         this.crm = crm;
         this.cpf = cpf;
         this.telefone = telefone;
         this.consultas = consultas;
     }
+
+    
 
     public Long getId() {
         return id;
@@ -84,6 +89,16 @@ public class Medico {
     public void setConsultas(List<Consulta> consultas) {
         this.consultas = consultas;
     }
+
+    public String getEspecialidade() {
+        return especialidade;
+    }
+
+    public void setEspecialidade(String especialidade) {
+        this.especialidade = especialidade;
+    }
+    
+    
     
     
 }
