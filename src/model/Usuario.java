@@ -19,7 +19,7 @@ public class Usuario {
     
     private String senha;
     
-    private int ativo;
+    private int ativo=1;
     
     private String role;
 
