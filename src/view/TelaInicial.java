@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 import model.Relogio;
+import model.Usuario;
 
 /**
  *
@@ -19,8 +20,11 @@ public class TelaInicial extends javax.swing.JFrame {
     /**
      * Creates new form TelaInicial
      */
-    public TelaInicial() {
+    
+    Usuario usuario;
+    public TelaInicial(Usuario usuario) {
         initComponents();
+        this.usuario = usuario;
         setTitle("App Clínica");
         Relogio relogio=new Relogio(lblHora);
         Thread t1=new Thread(relogio);
@@ -29,6 +33,11 @@ public class TelaInicial extends javax.swing.JFrame {
         DateTimeFormatter formatter=DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String data=date.format(formatter);
         lblData.setText("Data: "+data);
+        lblBemVindo.setText("Bem vindo "+usuario.getNome()+"!");
+        System.out.println(usuario.getRole());
+        if(usuario.getRole().equals("user")){
+            menuUsuarios.setEnabled(false);
+        }
     }
 
     /**
@@ -44,19 +53,20 @@ public class TelaInicial extends javax.swing.JFrame {
         lblBemVindo = new javax.swing.JLabel();
         lblData = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        menuCadastro = new javax.swing.JMenu();
+        menuUsuarios = new javax.swing.JMenuItem();
+        menuPacientes = new javax.swing.JMenuItem();
+        menuMedicos = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        menuConsultas = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
-        jMenuItem8 = new javax.swing.JMenuItem();
+        menuSair = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         lblHora.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblHora.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/clock.png"))); // NOI18N
@@ -67,34 +77,49 @@ public class TelaInicial extends javax.swing.JFrame {
         lblData.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblData.setText("Data: ");
 
-        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/application_add.png"))); // NOI18N
-        jMenu2.setText("Cadastro");
+        menuCadastro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/application_add.png"))); // NOI18N
+        menuCadastro.setText("Cadastro");
 
-        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/user.png"))); // NOI18N
-        jMenuItem3.setText("Usuários");
-        jMenu2.add(jMenuItem3);
-
-        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/user_red.png"))); // NOI18N
-        jMenuItem4.setText("Pacientes");
-        jMenu2.add(jMenuItem4);
-
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/doctor.png"))); // NOI18N
-        jMenuItem1.setText("Médicos");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        menuUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/user.png"))); // NOI18N
+        menuUsuarios.setText("Usuários");
+        menuUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                menuUsuariosActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem1);
+        menuCadastro.add(menuUsuarios);
 
-        jMenuBar1.add(jMenu2);
+        menuPacientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/user_red.png"))); // NOI18N
+        menuPacientes.setText("Pacientes");
+        menuPacientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuPacientesActionPerformed(evt);
+            }
+        });
+        menuCadastro.add(menuPacientes);
+
+        menuMedicos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/doctor.png"))); // NOI18N
+        menuMedicos.setText("Médicos");
+        menuMedicos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuMedicosActionPerformed(evt);
+            }
+        });
+        menuCadastro.add(menuMedicos);
+
+        jMenuBar1.add(menuCadastro);
 
         jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/calendar.png"))); // NOI18N
         jMenu1.setText("Consultas");
 
-        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/calendar_add.png"))); // NOI18N
-        jMenuItem2.setText("Agendar Consulta");
-        jMenu1.add(jMenuItem2);
+        menuConsultas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/calendar_add.png"))); // NOI18N
+        menuConsultas.setText("Agendar Consulta");
+        menuConsultas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuConsultasActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuConsultas);
 
         jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/calendar_view_day.png"))); // NOI18N
         jMenuItem5.setText("Consultas Hoje");
@@ -119,9 +144,14 @@ public class TelaInicial extends javax.swing.JFrame {
         jMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/opcoes.png"))); // NOI18N
         jMenu6.setText("Opções");
 
-        jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/systemshutdown_94125.png"))); // NOI18N
-        jMenuItem8.setText("Sair");
-        jMenu6.add(jMenuItem8);
+        menuSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/systemshutdown_94125.png"))); // NOI18N
+        menuSair.setText("Sair");
+        menuSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuSairActionPerformed(evt);
+            }
+        });
+        jMenu6.add(menuSair);
 
         jMenuBar1.add(jMenu6);
 
@@ -156,63 +186,53 @@ public class TelaInicial extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        
+        new Sobre().setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    private void menuMedicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMedicosActionPerformed
+        new TelaMedicos().setVisible(true);
+    }//GEN-LAST:event_menuMedicosActionPerformed
+
+    private void menuSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSairActionPerformed
+       int dialogResult = JOptionPane.showConfirmDialog(null,"Tem certeza que deseja sair?");
+        if(dialogResult == JOptionPane.YES_OPTION){
+            this.dispose();
+            new Login().setVisible(true);
+        }
+    }//GEN-LAST:event_menuSairActionPerformed
+
+    private void menuUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuUsuariosActionPerformed
+        new TelaUsuarios().setVisible(true);
+    }//GEN-LAST:event_menuUsuariosActionPerformed
+
+    private void menuPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPacientesActionPerformed
+        new TelaPacientes().setVisible(true);
+    }//GEN-LAST:event_menuPacientesActionPerformed
+
+    private void menuConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuConsultasActionPerformed
+        new telaConsultas().setVisible(true);
+    }//GEN-LAST:event_menuConsultasActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaInicial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaInicial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaInicial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaInicial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TelaInicial().setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JLabel lblBemVindo;
     private javax.swing.JLabel lblData;
     private javax.swing.JLabel lblHora;
+    private javax.swing.JMenu menuCadastro;
+    private javax.swing.JMenuItem menuConsultas;
+    private javax.swing.JMenuItem menuMedicos;
+    private javax.swing.JMenuItem menuPacientes;
+    private javax.swing.JMenuItem menuSair;
+    private javax.swing.JMenuItem menuUsuarios;
     // End of variables declaration//GEN-END:variables
 }

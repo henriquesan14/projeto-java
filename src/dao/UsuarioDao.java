@@ -13,7 +13,7 @@ import model.Usuario;
  * @author computador
  */
 public interface UsuarioDao {
-    Usuario logar(String nome,String senha);
+    Usuario logar(String login,String senha);
     int salvar(Usuario u);
     int editar(Usuario u);
     int desativar(Long id);

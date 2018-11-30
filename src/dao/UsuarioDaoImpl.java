@@ -21,13 +21,13 @@ import model.Usuario;
 public class UsuarioDaoImpl implements UsuarioDao {
 
     @Override
-    public Usuario logar(String nome, String senha) {
+    public Usuario logar(String login, String senha) {
         Usuario u = new Usuario();
         String sql = "select * from usuario where login=? and senha=?";
         PreparedStatement ps;
         try(Connection conn = new ConnectionFactory().getConnection()){
             ps = conn.prepareStatement(sql);
-            ps.setString(1, nome);
+            ps.setString(1, login);
             ps.setString(2, senha);
             ResultSet rs=ps.executeQuery();
             while(rs.next()){
@@ -37,13 +37,13 @@ public class UsuarioDaoImpl implements UsuarioDao {
                 u.setSenha(rs.getString("senha"));
                 u.setAtivo(rs.getInt("ativo"));
                 u.setRole(rs.getString("role"));
-                
+                return u;
             }
         }catch(SQLException e){
             System.out.println(e.getMessage());
             System.out.println("erro");
         }
-        return u;
+        return null;
     }
 
     @Override
