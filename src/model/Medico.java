@@ -97,6 +97,14 @@ public class Medico {
     public void setEspecialidade(String especialidade) {
         this.especialidade = especialidade;
     }
+
+    @Override
+    public String toString() {
+        return "Medico{" + "id=" + id + ", nome=" + nome + ", especialidade=" + especialidade + ", crm=" + crm + ", cpf=" + cpf + ", telefone=" + telefone + ", consultas=" + consultas + '}';
+    }
+    
+    
+    
     
     
     

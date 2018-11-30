@@ -5,7 +5,8 @@
  */
 package model;
 
-import java.time.LocalDate;
+
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,13 +23,13 @@ public class Paciente {
     
     private String cpf;
     
-    private LocalDate dtNascimento;
+    private Date dtNascimento;
     
     private String telefone;
     
     private List<Consulta> consultas;
 
-    public Paciente(Long id, String nome, String rg, String cpf, LocalDate dtNascimento, String telefone, List<Consulta> consultas) {
+    public Paciente(Long id, String nome, String rg, String cpf, Date dtNascimento, String telefone, List<Consulta> consultas) {
         this.id = id;
         this.nome = nome;
         this.rg = rg;
@@ -37,9 +38,6 @@ public class Paciente {
         this.telefone = telefone;
         this.consultas = consultas;
     }
-
-    
-    
 
     public Paciente() {
     }
@@ -76,11 +74,11 @@ public class Paciente {
         this.cpf = cpf;
     }
 
-    public LocalDate getDtNascimento() {
+    public Date getDtNascimento() {
         return dtNascimento;
     }
 
-    public void setDtNascimento(LocalDate dtNascimento) {
+    public void setDtNascimento(Date dtNascimento) {
         this.dtNascimento = dtNascimento;
     }
 
@@ -100,6 +98,20 @@ public class Paciente {
         this.consultas = consultas;
     }
 
+    @Override
+    public String toString() {
+        return "Paciente{" + "id=" + id + ", nome=" + nome + ", rg=" + rg + ", cpf=" + cpf + ", dtNascimento=" + dtNascimento + ", telefone=" + telefone + ", consultas=" + consultas + '}';
+    }
+    
+    
+    
+    
+
+    
+
+   
+    
+    
     
     
     

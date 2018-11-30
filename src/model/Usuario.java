@@ -19,19 +19,20 @@ public class Usuario {
     
     private String senha;
     
-    private int ativo=1;
+    private int ativo;
     
     private String role;
 
     public Usuario() {
+        this.ativo= 1;
     }
 
-    public Usuario(Long id, String nome, String login, String senha, int ativo, String role) {
+    public Usuario(Long id, String nome, String login, String senha, String role) {
         this.id = id;
         this.nome = nome;
         this.login = login;
         this.senha = senha;
-        this.ativo = ativo;
+        this.ativo = 1;
         this.role = role;
     }
     
@@ -85,6 +86,13 @@ public class Usuario {
     public void setRole(String role) {
         this.role = role;
     }
+
+    @Override
+    public String toString() {
+        return "Usuario{" + "id=" + id + ", nome=" + nome + ", login=" + login + ", senha=" + senha + ", ativo=" + ativo + ", role=" + role + '}';
+    }
+    
+    
     
     
     

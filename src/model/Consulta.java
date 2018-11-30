@@ -5,7 +5,7 @@
  */
 package model;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 /**
  *
@@ -15,24 +15,31 @@ public class Consulta {
     
     private Long id;
     
-    private LocalDate dtConsulta;
+    private Date dtConsulta;
     
     private String turno;
     
     private Paciente paciente;
     
     private Medico medico;
+    
+    private Usuario usuario;
 
     public Consulta() {
     }
 
-    public Consulta(Long id, LocalDate dtConsulta, String turno, Paciente paciente, Medico medico) {
+    public Consulta(Long id, Date dtConsulta, String turno, Paciente paciente, Medico medico, Usuario usuario) {
         this.id = id;
         this.dtConsulta = dtConsulta;
         this.turno = turno;
         this.paciente = paciente;
         this.medico = medico;
+        this.usuario = usuario;
     }
+
+    
+
+    
 
     public Long getId() {
         return id;
@@ -42,13 +49,15 @@ public class Consulta {
         this.id = id;
     }
 
-    public LocalDate getDtConsulta() {
+    public Date getDtConsulta() {
         return dtConsulta;
     }
 
-    public void setDtConsulta(LocalDate dtConsulta) {
+    public void setDtConsulta(Date dtConsulta) {
         this.dtConsulta = dtConsulta;
     }
+
+    
 
     public String getTurno() {
         return turno;
@@ -73,6 +82,27 @@ public class Consulta {
     public void setMedico(Medico medico) {
         this.medico = medico;
     }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    @Override
+    public String toString() {
+        return "Consulta{" + "id=" + id + ", dtConsulta=" + dtConsulta + ", turno=" + turno + ", paciente=" + paciente + ", medico=" + medico + ", usuario=" + usuario + '}';
+    }
+    
+    
+    
+
+    
+    
+    
+    
     
     
     
