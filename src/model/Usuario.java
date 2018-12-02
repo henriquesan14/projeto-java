@@ -35,6 +35,15 @@ public class Usuario {
         this.ativo = 1;
         this.role = role;
     }
+
+    public Usuario(String nome, String login, String senha, String role) {
+        this.nome = nome;
+        this.login = login;
+        this.senha = senha;
+        this.role = role;
+        this.ativo = 1;
+    }
+    
     
    
     

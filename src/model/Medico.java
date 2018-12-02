@@ -30,15 +30,24 @@ public class Medico {
     public Medico() {
     }
 
-    public Medico(Long id, String nome, String especialidade, String crm, String cpf, String telefone, List<Consulta> consultas) {
+    public Medico(String nome, String especialidade, String crm, String cpf, String telefone) {
+        this.nome = nome;
+        this.especialidade = especialidade;
+        this.crm = crm;
+        this.cpf = cpf;
+        this.telefone = telefone;
+    }
+
+    public Medico(Long id, String nome, String especialidade, String crm, String cpf, String telefone) {
         this.id = id;
         this.nome = nome;
         this.especialidade = especialidade;
         this.crm = crm;
         this.cpf = cpf;
         this.telefone = telefone;
-        this.consultas = consultas;
     }
+
+    
 
     
 
@@ -100,7 +109,7 @@ public class Medico {
 
     @Override
     public String toString() {
-        return "Medico{" + "id=" + id + ", nome=" + nome + ", especialidade=" + especialidade + ", crm=" + crm + ", cpf=" + cpf + ", telefone=" + telefone + ", consultas=" + consultas + '}';
+        return nome;
     }
     
     

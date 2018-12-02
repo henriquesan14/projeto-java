@@ -28,9 +28,9 @@ public class ConsultaDaoImplTest {
     @Test
     public void inserir() {
         Medico medico = new Medico();
-        medico.setId(3l);
+        medico.setId(7l);
         Paciente paciente=new Paciente();
-        paciente.setId(4l);
+        paciente.setId(32l);
         Usuario u=new Usuario();
         u.setId(1l);
         Consulta c=new Consulta();
@@ -52,7 +52,7 @@ public class ConsultaDaoImplTest {
     
     @Test
     public void listarPorId() {
-        Consulta consulta=dao.buscarPorId(4l);
+        Consulta consulta=dao.buscarPorId(10l);
         System.out.println(consulta);
     }
     

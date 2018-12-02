@@ -28,14 +28,25 @@ public class Consulta {
     public Consulta() {
     }
 
-    public Consulta(Long id, Date dtConsulta, String turno, Paciente paciente, Medico medico, Usuario usuario) {
+    public Consulta(Long id, String turno, Paciente paciente, Medico medico, Usuario usuario) {
         this.id = id;
-        this.dtConsulta = dtConsulta;
         this.turno = turno;
         this.paciente = paciente;
         this.medico = medico;
         this.usuario = usuario;
     }
+
+    public Consulta(String turno, Paciente paciente, Medico medico, Usuario usuario) {
+        this.turno = turno;
+        this.paciente = paciente;
+        this.medico = medico;
+        this.usuario = usuario;
+    }
+    
+    
+    
+
+    
 
     
 

@@ -5,7 +5,7 @@
  */
 package view;
 
-import controller.LoginController;
+import controller.UsuarioController;
 import javax.swing.JOptionPane;
 import model.Usuario;
 
@@ -18,7 +18,7 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
-    LoginController controller=new  LoginController();
+    UsuarioController controller=new  UsuarioController();
     public Login() {
         initComponents();
         setTitle("Login");
@@ -118,7 +118,7 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-        Usuario usuario=controller.login(txtLogin, txtSenha);
+        Usuario usuario=controller.login(txtLogin.getText(), txtSenha.getText());
         if(usuario !=null){
            this.dispose();
            new TelaInicial(usuario).setVisible(true);

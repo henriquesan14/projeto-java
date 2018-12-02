@@ -165,4 +165,20 @@ public class ConsultaDaoImpl implements ConsultaDao {
 	    return c; //To change body of generated methods, choose Tools | Templates.
     }
     
+    public int verifica(){
+        String sql="SELECT COUNT(*) FROM pedidos WHERE dataPedido= '2018-10-26 12:47:50';";
+        PreparedStatement ps;
+	    try(Connection conn = new ConnectionFactory().getConnection()){
+	        ps = conn.prepareStatement(sql);
+	        ResultSet rs = ps.executeQuery();
+                if(rs.next()){
+                    return rs.getInt("count(*)");
+                }
+	     }catch (SQLException e) {
+	        System.out.println(e.getMessage());
+	        System.out.println("Error ao listar pedidos do banco!");
+	    }
+	    return 0;
+    }
+    
 }

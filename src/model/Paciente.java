@@ -29,15 +29,28 @@ public class Paciente {
     
     private List<Consulta> consultas;
 
-    public Paciente(Long id, String nome, String rg, String cpf, Date dtNascimento, String telefone, List<Consulta> consultas) {
+    public Paciente(Long id, String nome, String rg, String cpf, String telefone) {
         this.id = id;
         this.nome = nome;
         this.rg = rg;
         this.cpf = cpf;
-        this.dtNascimento = dtNascimento;
         this.telefone = telefone;
-        this.consultas = consultas;
     }
+
+    
+
+    public Paciente(String nome, String rg, String cpf, String telefone) {
+        this.nome = nome;
+        this.rg = rg;
+        this.cpf = cpf;
+        this.telefone = telefone;
+    }
+
+    
+
+    
+    
+    
 
     public Paciente() {
     }
@@ -100,7 +113,7 @@ public class Paciente {
 
     @Override
     public String toString() {
-        return "Paciente{" + "id=" + id + ", nome=" + nome + ", rg=" + rg + ", cpf=" + cpf + ", dtNascimento=" + dtNascimento + ", telefone=" + telefone + ", consultas=" + consultas + '}';
+        return nome;
     }
     
     
