@@ -5,6 +5,7 @@
  */
 package dao;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import model.Consulta;
@@ -55,5 +56,15 @@ public class ConsultaDaoImplTest {
         Consulta consulta=dao.buscarPorId(10l);
         System.out.println(consulta);
     }
+    
+    @Test
+    public void verifica(){
+        Date date=new Date();
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        String data=sdf.format(date);
+        System.out.println(dao.verifica(data, "Manhã", 7l));
+        //System.out.println(dao.verifica(c));
+    }
+    
     
 }

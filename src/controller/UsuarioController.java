@@ -30,8 +30,11 @@ public class UsuarioController {
     }
     
     public int salvar(String nome,String login,String senha,String role){
-        Usuario u=new Usuario(nome,login,senha,role);
-        return dao.salvar(u);
+        if(dao.verificaLogin(login)==false){
+            Usuario u=new Usuario(nome,login,senha,role);
+            return dao.salvar(u);
+        }
+        return 0; 
     }
     
     public int editar(Long id,String nome,String login,String senha,String role){

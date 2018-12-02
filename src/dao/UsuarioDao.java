@@ -21,4 +21,5 @@ public interface UsuarioDao {
     List<Usuario> buscar();
     Usuario buscarPorId(Long id);
     List<Usuario> buscarPorNome(String nome);
+    boolean verificaLogin(String login);
 }

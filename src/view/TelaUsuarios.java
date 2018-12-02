@@ -341,7 +341,7 @@ public class TelaUsuarios extends javax.swing.JFrame {
             if(!txtNome.getText().equals("") && !txtLogin.getText().equals("") && !txtSenha.getText().equals("") && !cbRole.getSelectedItem().equals(null) ){
                int ok=controller.salvar(txtNome.getText(), txtLogin.getText(), txtSenha.getText(), cbRole.getSelectedItem().toString());
                if(ok !=1){
-                    JOptionPane.showMessageDialog(this, "Error");
+                    JOptionPane.showMessageDialog(this, "Login já existe");
                 }else{
                     JOptionPane.showMessageDialog(this, "Usuário Salvo");
                     atualizaTabela();

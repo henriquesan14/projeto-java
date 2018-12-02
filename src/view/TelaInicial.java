@@ -123,6 +123,11 @@ public class TelaInicial extends javax.swing.JFrame {
 
         jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/calendar_view_day.png"))); // NOI18N
         jMenuItem5.setText("Consultas Hoje");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem5);
 
         jMenuBar1.add(jMenu1);
@@ -186,7 +191,9 @@ public class TelaInicial extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        
         new Sobre().setVisible(true);
+        
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void menuMedicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMedicosActionPerformed
@@ -210,8 +217,12 @@ public class TelaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_menuPacientesActionPerformed
 
     private void menuConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuConsultasActionPerformed
-        new telaConsultas().setVisible(true);
+        new TelaConsultas(this.usuario).setVisible(true);
     }//GEN-LAST:event_menuConsultasActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -18,5 +18,5 @@ public interface ConsultaDao {
     int excluir(Long id);
     List<Consulta> buscar();
     Consulta buscarPorId(Long id);
-    
+    int verifica(String data,String turno,Long id);
 }

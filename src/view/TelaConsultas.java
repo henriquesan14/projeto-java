@@ -25,10 +25,10 @@ import model.Usuario;
  *
  * @author computador
  */
-public class telaConsultas extends javax.swing.JFrame {
+public class TelaConsultas extends javax.swing.JFrame {
 
     /**
-     * Creates new form telaConsultas
+     * Creates new form TelaConsultas
      */
     ConsultaController ccontroller=new ConsultaController();
     PacienteController pcontroller=new PacienteController();
@@ -36,7 +36,7 @@ public class telaConsultas extends javax.swing.JFrame {
     DefaultComboBoxModel<Paciente> modelPacientes;
     DefaultComboBoxModel<Medico> modelMedicos= new DefaultComboBoxModel<>();
     Usuario usuario;
-    public telaConsultas(Usuario usuario) {
+    public TelaConsultas(Usuario usuario) {
         initComponents();
         this.usuario=usuario;
         modelPacientes=new DefaultComboBoxModel<>(new Vector(pcontroller.listar()));
@@ -339,7 +339,7 @@ public class telaConsultas extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 671, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE)
         );
 
         pack();
@@ -361,13 +361,18 @@ public class telaConsultas extends javax.swing.JFrame {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         
         try {
-           int ok= ccontroller.salvar(txtData.getText(),(String) cbTurno.getSelectedItem(), (Paciente) cbPacientes.getSelectedItem(),(Medico) cbMedicos.getSelectedItem(), this.usuario);
-           if(ok != 1){
-               JOptionPane.showMessageDialog(this,"Erro");
+           if(!cbTurno.getSelectedItem().equals(null)){
+               int ok= ccontroller.salvar(txtData.getText(),(String) cbTurno.getSelectedItem(), (Paciente) cbPacientes.getSelectedItem(),(Medico) cbMedicos.getSelectedItem(), this.usuario);
+                if(ok != 1){
+                    JOptionPane.showMessageDialog(this,"Limite de consultas por medico/dia/turno excedida");
+                }else{
+                    JOptionPane.showMessageDialog(this,"Consulta salva");
+                    atualizaTabela();
+                }
            }else{
-               JOptionPane.showMessageDialog(this,"Consulta salva");
-               atualizaTabela();
+               JOptionPane.showMessageDialog(this, "Campo(s) vazio(s)");
            }
+           
         } catch (ParseException ex) {
             JOptionPane.showMessageDialog(this,"Data inválida");
         }catch(NullPointerException e){
@@ -440,14 +445,15 @@ public class telaConsultas extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(telaConsultas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaConsultas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(telaConsultas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaConsultas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(telaConsultas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaConsultas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(telaConsultas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaConsultas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
@@ -455,7 +461,7 @@ public class telaConsultas extends javax.swing.JFrame {
             public void run() {
                 Usuario usuario=new Usuario();
                 usuario.setId(1l);
-                new telaConsultas(usuario).setVisible(true);
+                new TelaConsultas(usuario).setVisible(true);
             }
         });
     }

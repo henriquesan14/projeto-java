@@ -35,9 +35,16 @@ public class ConsultaController {
     }
     
     public int salvar(String dtConsulta,String turno,Paciente paciente,Medico medico,Usuario usuario) throws ParseException{
-        Consulta c=new Consulta(turno,paciente,medico,usuario);
-        c.setDtConsulta(formatarData(dtConsulta));
-        return dao.salvar(c);
+        Date date=new Date();
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        String data=sdf.format(date);
+        int ok=dao.verifica(data, turno, medico.getId());
+        if(ok <=10){
+            Consulta c=new Consulta(turno,paciente,medico,usuario);
+            c.setDtConsulta(formatarData(dtConsulta));
+            return dao.salvar(c);
+        }
+        return 0;
     }
     
     public int editar(Long id,String dtConsulta,String turno,Paciente paciente,Medico medico,Usuario usuario) throws ParseException{
@@ -53,8 +60,6 @@ public class ConsultaController {
     public List<Consulta> listar() {
         return dao.buscar();
     }
-    
-    
     
     
 }

@@ -123,7 +123,7 @@ public class Login extends javax.swing.JFrame {
            this.dispose();
            new TelaInicial(usuario).setVisible(true);
         }else{
-            JOptionPane.showMessageDialog(this,"erro");
+            JOptionPane.showMessageDialog(this,"Usuario/senha invalidos");
         }
     }//GEN-LAST:event_btnEntrarActionPerformed
 

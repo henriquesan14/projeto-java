@@ -194,4 +194,22 @@ public class UsuarioDaoImpl implements UsuarioDao {
 	    return usuarios;
     }
     
+    public boolean verificaLogin(String login) {
+        Usuario u = new Usuario();
+        String sql = "select * from usuario where login=?";
+        PreparedStatement ps;
+        try(Connection conn = new ConnectionFactory().getConnection()){
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, login);
+            ResultSet rs=ps.executeQuery();
+            if(rs.next()){
+                return true;
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+            System.out.println("erro");
+        }
+        return false;
+    }
+    
 }
