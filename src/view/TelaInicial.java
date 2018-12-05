@@ -186,7 +186,7 @@ public class TelaInicial extends javax.swing.JFrame {
                 .addContainerGap(150, Short.MAX_VALUE))
         );
 
-        pack();
+        setSize(new java.awt.Dimension(630, 508));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -197,7 +197,8 @@ public class TelaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void menuMedicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMedicosActionPerformed
-        new TelaMedicos().setVisible(true);
+        new TelaMedicos(this).setVisible(true);
+        
     }//GEN-LAST:event_menuMedicosActionPerformed
 
     private void menuSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSairActionPerformed
