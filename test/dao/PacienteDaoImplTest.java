@@ -78,4 +78,8 @@ public class PacienteDaoImplTest {
         
     }
     
+    @Test
+    public void qtdConsultas(){
+        System.out.println(dao.qtdConsultas(32l));
+    }
 }

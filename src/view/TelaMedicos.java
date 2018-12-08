@@ -28,7 +28,6 @@ public class TelaMedicos extends javax.swing.JFrame implements WindowListener {
     public TelaMedicos(JFrame janela) {
         initComponents();
         this.janela = janela;
-        janela.addWindowListener(this);
         this.addWindowListener(this);
         janela.setEnabled(false);
         atualizaTabela();
@@ -400,7 +399,7 @@ public class TelaMedicos extends javax.swing.JFrame implements WindowListener {
         if(dialogResult == JOptionPane.YES_OPTION){
             int ok= controller.apagar(Long.parseLong(txtId.getText()));
             if(ok !=1){
-                JOptionPane.showMessageDialog(this,"Erro");
+                JOptionPane.showMessageDialog(this,"Não é possivel excluir médico com consultas vinculadas");
             }else{
                 JOptionPane.showMessageDialog(this,"Médico excluido");
             }

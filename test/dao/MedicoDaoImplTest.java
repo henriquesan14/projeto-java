@@ -75,4 +75,9 @@ public class MedicoDaoImplTest {
         
     }
     
+    @Test
+    public void qtdConsultas(){
+        System.out.println(dao.qtdConsultas(8l));
+    }
+    
 }

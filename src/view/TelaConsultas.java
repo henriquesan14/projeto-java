@@ -8,12 +8,15 @@ package view;
 import controller.ConsultaController;
 import controller.MedicoController;
 import controller.PacienteController;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Consulta;
@@ -25,18 +28,19 @@ import model.Usuario;
  *
  * @author computador
  */
-public class TelaConsultas extends javax.swing.JFrame {
+public class TelaConsultas extends javax.swing.JFrame implements WindowListener {
 
     /**
      * Creates new form TelaConsultas
      */
+    JFrame janela;
     ConsultaController ccontroller=new ConsultaController();
     PacienteController pcontroller=new PacienteController();
     MedicoController mcontroller =new MedicoController();
     DefaultComboBoxModel<Paciente> modelPacientes;
     DefaultComboBoxModel<Medico> modelMedicos= new DefaultComboBoxModel<>();
     Usuario usuario;
-    public TelaConsultas(Usuario usuario) {
+    public TelaConsultas(JFrame janela,Usuario usuario) {
         initComponents();
         this.usuario=usuario;
         modelPacientes=new DefaultComboBoxModel<>(new Vector(pcontroller.listar()));
@@ -49,6 +53,10 @@ public class TelaConsultas extends javax.swing.JFrame {
         modelPacientes.setSelectedItem(null);
         btnAlterar.setEnabled(false);
         btnApagar.setEnabled(false);
+        this.janela=janela;
+        this.addWindowListener(this);
+        janela.setEnabled(false);
+        
     }
     
     public void atualizaTabela(){
@@ -67,6 +75,23 @@ public class TelaConsultas extends javax.swing.JFrame {
         }
         tableConsultas.setModel(tableModel);
         
+    }
+    
+    public void filtroPesquisa(){
+        DefaultTableModel tableModel=new DefaultTableModel();
+        tableModel.addColumn("Id");
+        tableModel.addColumn("Data Consulta");
+        tableModel.addColumn("Turno");
+        tableModel.addColumn("Id Paciente");
+        tableModel.addColumn("Nome Paciente");
+        tableModel.addColumn("Id Médico");
+        tableModel.addColumn("Nome Médico");
+        for(Consulta c: ccontroller.listarPorPaciente(txtFiltro.getText())){
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                String data = sdf.format(c.getDtConsulta());
+                tableModel.addRow(new String[]{c.getId().toString(),data,c.getTurno(),c.getPaciente().getId().toString(),c.getPaciente().getNome(),c.getMedico().getId().toString(),c.getMedico().getNome()}); 
+        }
+        tableConsultas.setModel(tableModel);
     }
     
     public void setarCampos(){
@@ -144,7 +169,13 @@ public class TelaConsultas extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tableConsultas);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/zoom.png"))); // NOI18N
-        jLabel1.setText("Pesquisar");
+        jLabel1.setText("Pesquisar por paciente");
+
+        txtFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtFiltroKeyReleased(evt);
+            }
+        });
 
         jLabel2.setText("Data da consulta");
 
@@ -276,12 +307,12 @@ public class TelaConsultas extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(355, 355, 355))
+                        .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(196, 196, 196))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel5)
                         .addComponent(cbTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(165, Short.MAX_VALUE))
+                .addContainerGap(102, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jScrollPane1)
@@ -339,7 +370,7 @@ public class TelaConsultas extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 671, Short.MAX_VALUE)
         );
 
         pack();
@@ -428,43 +459,14 @@ public class TelaConsultas extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnApagarActionPerformed
 
+    private void txtFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroKeyReleased
+        filtroPesquisa();
+    }//GEN-LAST:event_txtFiltroKeyReleased
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaConsultas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaConsultas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaConsultas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaConsultas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                Usuario usuario=new Usuario();
-                usuario.setId(1l);
-                new TelaConsultas(usuario).setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
@@ -490,4 +492,39 @@ public class TelaConsultas extends javax.swing.JFrame {
     private javax.swing.JTextField txtFiltro;
     private javax.swing.JTextField txtId;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+        
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        janela.setEnabled(true);
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+         
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+        
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+        
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+        
+    }
 }

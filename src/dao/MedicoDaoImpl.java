@@ -152,4 +152,23 @@ public class MedicoDaoImpl implements MedicoDao{
 	    return medicos;
     }
     
+    
+    @Override
+    public int qtdConsultas(Long idMedico){
+        String sql="SELECT COUNT(*) FROM consulta WHERE id_medico_fk=? ";
+        PreparedStatement ps;
+	    try(Connection conn = new ConnectionFactory().getConnection()){
+	        ps = conn.prepareStatement(sql);
+                ps.setLong(1,idMedico);
+	        ResultSet rs = ps.executeQuery();
+                if(rs.next()){
+                    return rs.getInt("count(*)");
+                }
+	     }catch (SQLException e) {
+	        System.out.println(e.getMessage());
+	        System.out.println("Error ao listar consultas do banco!");
+	    }
+	    return 0;
+    }
+    
 }

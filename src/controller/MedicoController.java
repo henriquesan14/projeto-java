@@ -41,7 +41,10 @@ public class MedicoController {
     }
     
     public int apagar(Long id) {
-        return dao.excluir(id);
+        if(dao.qtdConsultas(id) ==0){
+            return dao.excluir(id);
+        }
+        return 0;
     }
     
     public Medico listarPorId(Long id){

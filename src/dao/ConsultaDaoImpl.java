@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -128,15 +129,15 @@ public class ConsultaDaoImpl implements ConsultaDao {
     }
 
     @Override
-    public Consulta buscarPorId(Long id) {
-        Consulta c=new Consulta();
-	    String sql = "SELECT * FROM consulta inner join medico on consulta.id_medico_fk=medico.id_medico inner join paciente on consulta.id_paciente_fk=paciente.id_paciente where id_consulta=?";
+    public List<Consulta> buscarPorPaciente(String nome) {
+        ArrayList<Consulta> consultas = new ArrayList<>();
+	    String sql = "SELECT * FROM consulta inner join medico on consulta.id_medico_fk=medico.id_medico inner join paciente on consulta.id_paciente_fk=paciente.id_paciente where paciente.nome_paciente like ?";
 	    PreparedStatement ps;
 	    try(Connection conn = new ConnectionFactory().getConnection()){
 	        ps = conn.prepareStatement(sql);
-                ps.setLong(1, id);
+                ps.setString(1,"%"+ nome+"%");
 	        ResultSet rs = ps.executeQuery();
-	        while(rs.next()){
+	        while(rs.next()){ 
                     Paciente p=new Paciente();
                     p.setId(rs.getLong("id_paciente"));
                     p.setNome(rs.getString("nome_paciente"));
@@ -153,17 +154,65 @@ public class ConsultaDaoImpl implements ConsultaDao {
                     m.setCrm(rs.getString("crm"));
                     m.setTelefone(rs.getString("telefone_medico"));
                     
+                    Consulta c = new Consulta();
                     c.setId(rs.getLong("id_consulta"));
 	            c.setDtConsulta(rs.getDate("data_consulta"));
                     c.setTurno(rs.getString("turno"));
                     c.setPaciente(p);
                     c.setMedico(m);
+                    
+                    consultas.add(c);
 	        }
 	     }catch (SQLException e) {
 	        System.out.println(e.getMessage());
 	        System.out.println("Error ao listar consultas do banco!");
 	    }
-	    return c; //To change body of generated methods, choose Tools | Templates.
+	    return consultas; //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public List<Consulta> consultasHoje( ) {
+        ArrayList<Consulta> consultas = new ArrayList<>();
+	    String sql = "SELECT * FROM consulta inner join medico on consulta.id_medico_fk=medico.id_medico inner join paciente on consulta.id_paciente_fk=paciente.id_paciente where data_consulta = ?";
+	    PreparedStatement ps;
+            Date date=new Date();
+            SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+            String data=sdf.format(date);
+	    try(Connection conn = new ConnectionFactory().getConnection()){
+	        ps = conn.prepareStatement(sql);
+                ps.setString(1,data);
+	        ResultSet rs = ps.executeQuery();
+	        while(rs.next()){ 
+                    Paciente p=new Paciente();
+                    p.setId(rs.getLong("id_paciente"));
+                    p.setNome(rs.getString("nome_paciente"));
+                    p.setRg(rs.getString("rg"));
+                    p.setCpf(rs.getString("cpf_paciente"));
+                    p.setDtNascimento(rs.getDate("data_nascimento"));
+                    p.setTelefone(rs.getString("telefone_paciente"));
+                    
+                    Medico m = new Medico();
+                    m.setId(rs.getLong("id_medico"));
+                    m.setNome(rs.getString("nome_medico"));
+                    m.setEspecialidade(rs.getString("especialidade"));
+                    m.setCpf(rs.getString("cpf_medico"));
+                    m.setCrm(rs.getString("crm"));
+                    m.setTelefone(rs.getString("telefone_medico"));
+                    
+                    Consulta c = new Consulta();
+                    c.setId(rs.getLong("id_consulta"));
+	            c.setDtConsulta(rs.getDate("data_consulta"));
+                    c.setTurno(rs.getString("turno"));
+                    c.setPaciente(p);
+                    c.setMedico(m);
+                    
+                    consultas.add(c);
+	        }
+	     }catch (SQLException e) {
+	        System.out.println(e.getMessage());
+	        System.out.println("Error ao listar consultas do banco!");
+	    }
+	    return consultas; //To change body of generated methods, choose Tools | Templates.
     }
     
     public int verifica(String data,String turno,Long idMedico){

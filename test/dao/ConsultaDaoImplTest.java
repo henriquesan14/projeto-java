@@ -6,6 +6,7 @@
 package dao;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import model.Consulta;
@@ -52,9 +53,11 @@ public class ConsultaDaoImplTest {
     }
     
     @Test
-    public void listarPorId() {
-        Consulta consulta=dao.buscarPorId(10l);
-        System.out.println(consulta);
+    public void listarPorPaciente() {
+        List<Consulta> consultas =dao.buscarPorPaciente("jubileu");
+        for(Consulta c: consultas){
+            System.out.println(c);
+        }
     }
     
     @Test

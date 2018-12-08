@@ -19,5 +19,5 @@ public interface MedicoDao {
     List<Medico> buscar();
     Medico buscarPorId(Long id);
     List<Medico> buscarPorNome(String nome);
-    
+    int qtdConsultas(Long idMedico);
 }

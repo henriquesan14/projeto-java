@@ -61,5 +61,13 @@ public class ConsultaController {
         return dao.buscar();
     }
     
+    public List<Consulta> listarPorPaciente(String nome) {
+        return dao.buscarPorPaciente(nome);
+    }
+    
+    public List<Consulta> consultasHoje(){
+        return dao.consultasHoje();
+    }
+    
     
 }

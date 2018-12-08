@@ -17,6 +17,7 @@ public interface ConsultaDao {
     int editar(Consulta c);
     int excluir(Long id);
     List<Consulta> buscar();
-    Consulta buscarPorId(Long id);
+    List<Consulta> buscarPorPaciente(String nome);
     int verifica(String data,String turno,Long id);
+    List<Consulta> consultasHoje();
 }

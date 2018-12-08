@@ -6,10 +6,13 @@
 package view;
 
 import controller.PacienteController;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Paciente;
@@ -18,17 +21,21 @@ import model.Paciente;
  *
  * @author computador
  */
-public class TelaPacientes extends javax.swing.JFrame {
+public class TelaPacientes extends javax.swing.JFrame implements WindowListener {
 
     /**
      * Creates new form telaPacientes
      */
+    JFrame janela;
     PacienteController controller=new PacienteController();
-    public TelaPacientes() {
+    public TelaPacientes(JFrame janela) {
         initComponents();
         atualizaTabela();
         btnAlterar.setEnabled(false);
         btnApagar.setEnabled(false);
+        this.janela=janela;
+        this.addWindowListener(this);
+        janela.setEnabled(false);
     }
     
     public void atualizaTabela(){
@@ -418,7 +425,7 @@ public class TelaPacientes extends javax.swing.JFrame {
         if(dialogResult == JOptionPane.YES_OPTION){
             int ok= controller.apagar(Long.parseLong(txtId.getText()));
             if(ok !=1){
-                JOptionPane.showMessageDialog(this,"Erro");
+                JOptionPane.showMessageDialog(this,"Não é possivel excluir paciente com consultas vinculadas");
             }else{
                 JOptionPane.showMessageDialog(this,"Paciente excluido");
             }
@@ -430,38 +437,7 @@ public class TelaPacientes extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaPacientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaPacientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaPacientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaPacientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TelaPacientes().setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
@@ -487,4 +463,39 @@ public class TelaPacientes extends javax.swing.JFrame {
     private javax.swing.JTextField txtRg;
     private javax.swing.JFormattedTextField txtTelefone;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+        
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+       
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        janela.setEnabled(true);
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+        
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+       
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+         
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+       
+    }
 }

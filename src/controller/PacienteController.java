@@ -44,7 +44,10 @@ public class PacienteController {
     }
     
     public int apagar(Long id){
-        return dao.excluir(id);
+        if(dao.qtdConsultas(id)==0){
+           return dao.excluir(id); 
+        }
+        return 0;
     }
     
     public List<Paciente> listar() {
