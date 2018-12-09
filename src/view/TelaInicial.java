@@ -6,9 +6,12 @@
 package view;
 
 import controller.ConsultaController;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Consulta;
@@ -77,6 +80,7 @@ public class TelaInicial extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbConsultasHoje = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuCadastro = new javax.swing.JMenu();
         menuUsuarios = new javax.swing.JMenuItem();
@@ -91,15 +95,22 @@ public class TelaInicial extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
+        getContentPane().setLayout(null);
 
         lblHora.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblHora.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/clock.png"))); // NOI18N
+        getContentPane().add(lblHora);
+        lblHora.setBounds(360, 90, 170, 16);
 
         lblBemVindo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblBemVindo.setText("Bem vindo!");
+        getContentPane().add(lblBemVindo);
+        lblBemVindo.setBounds(59, 33, 290, 22);
 
         lblData.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblData.setText("Data: ");
+        getContentPane().add(lblData);
+        lblData.setBounds(59, 82, 220, 22);
 
         tbConsultasHoje.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -109,14 +120,24 @@ public class TelaInicial extends javax.swing.JFrame {
 
             }
         ));
+        tbConsultasHoje.setGridColor(new java.awt.Color(153, 255, 255));
+        tbConsultasHoje.setSelectionForeground(new java.awt.Color(51, 51, 0));
         jScrollPane1.setViewportView(tbConsultasHoje);
+
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(50, 200, 713, 384);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Consultas de Hoje");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(60, 160, 126, 17);
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(526, 51, 0, 0);
 
         menuCadastro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/application_add.png"))); // NOI18N
         menuCadastro.setText("Cadastro");
 
+        menuUsuarios.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_MASK));
         menuUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/user.png"))); // NOI18N
         menuUsuarios.setText("Usuários");
         menuUsuarios.addActionListener(new java.awt.event.ActionListener() {
@@ -126,6 +147,7 @@ public class TelaInicial extends javax.swing.JFrame {
         });
         menuCadastro.add(menuUsuarios);
 
+        menuPacientes.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK));
         menuPacientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/user_red.png"))); // NOI18N
         menuPacientes.setText("Pacientes");
         menuPacientes.addActionListener(new java.awt.event.ActionListener() {
@@ -135,6 +157,7 @@ public class TelaInicial extends javax.swing.JFrame {
         });
         menuCadastro.add(menuPacientes);
 
+        menuMedicos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.ALT_MASK));
         menuMedicos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/doctor.png"))); // NOI18N
         menuMedicos.setText("Médicos");
         menuMedicos.addActionListener(new java.awt.event.ActionListener() {
@@ -154,8 +177,9 @@ public class TelaInicial extends javax.swing.JFrame {
             }
         });
 
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_MASK));
         jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/calendar_add.png"))); // NOI18N
-        jMenuItem1.setText("Agendar Consulta");
+        jMenuItem1.setText("Agendar");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
@@ -195,44 +219,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
         setJMenuBar(jMenuBar1);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblData)
-                                .addGap(133, 133, 133)
-                                .addComponent(lblHora, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(lblBemVindo)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 713, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(30, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(lblBemVindo)
-                .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblData)
-                    .addComponent(lblHora))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
-        );
-
-        setSize(new java.awt.Dimension(787, 644));
+        setSize(new java.awt.Dimension(841, 670));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -258,7 +245,11 @@ public class TelaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_menuUsuariosActionPerformed
 
     private void menuPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPacientesActionPerformed
-        new TelaPacientes(this).setVisible(true);
+        try {
+            new TelaPacientes(this).setVisible(true);
+        } catch (ParseException ex) {
+            Logger.getLogger(TelaInicial.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_menuPacientesActionPerformed
 
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
@@ -276,6 +267,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu6;

@@ -23,7 +23,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
     @Override
     public Usuario logar(String login, String senha) {
         Usuario u = new Usuario();
-        String sql = "select * from usuario where login=? and senha=?";
+        String sql = "select * from usuario where login=? and senha=? and ativo=1";
         PreparedStatement ps;
         try(Connection conn = new ConnectionFactory().getConnection()){
             ps = conn.prepareStatement(sql);

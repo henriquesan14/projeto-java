@@ -10,6 +10,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -28,7 +29,7 @@ public class TelaPacientes extends javax.swing.JFrame implements WindowListener 
      */
     JFrame janela;
     PacienteController controller=new PacienteController();
-    public TelaPacientes(JFrame janela) {
+    public TelaPacientes(JFrame janela) throws ParseException {
         initComponents();
         atualizaTabela();
         btnAlterar.setEnabled(false);
@@ -73,21 +74,29 @@ public class TelaPacientes extends javax.swing.JFrame implements WindowListener 
     
     public void setarCampos(){
         int setar = tablePacientes.getSelectedRow();
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        Date data;
+        try {
+            data = formato.parse(tablePacientes.getModel().getValueAt(setar, 4).toString());
+            dtNascimento.setDate(data);
+        } catch (ParseException ex) {
+            Logger.getLogger(TelaPacientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
         txtId.setText(tablePacientes.getModel().getValueAt(setar, 0).toString());
         txtNome.setText(tablePacientes.getModel().getValueAt(setar, 1).toString());
         txtRg.setText(tablePacientes.getModel().getValueAt(setar, 2).toString());
         txtCpf.setText(tablePacientes.getModel().getValueAt(setar, 3).toString());
-        txtNascimento.setText(tablePacientes.getModel().getValueAt(setar, 4).toString());
         txtTelefone.setText(tablePacientes.getModel().getValueAt(setar, 5).toString());
         btnSalvar.setEnabled(false);
     }
     
     public void limparCampos(){
+        
         txtId.setText(null);
         txtNome.setText(null);
         txtRg.setText(null);
         txtCpf.setText(null);
-        txtNascimento.setText(null);
+        dtNascimento.setDate(null);
         txtTelefone.setText(null);
         btnSalvar.setEnabled(true);
     }
@@ -112,10 +121,8 @@ public class TelaPacientes extends javax.swing.JFrame implements WindowListener 
         txtNome = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        txtRg = new javax.swing.JTextField();
         txtCpf = new javax.swing.JFormattedTextField();
         jLabel6 = new javax.swing.JLabel();
-        txtNascimento = new javax.swing.JFormattedTextField();
         jLabel7 = new javax.swing.JLabel();
         txtTelefone = new javax.swing.JFormattedTextField();
         btnSalvar = new javax.swing.JButton();
@@ -123,11 +130,13 @@ public class TelaPacientes extends javax.swing.JFrame implements WindowListener 
         btnApagar = new javax.swing.JButton();
         btnLimpar = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
+        dtNascimento = new com.toedter.calendar.JDateChooser();
+        txtRg = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Pacientes"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pacientes", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
         tablePacientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -175,12 +184,6 @@ public class TelaPacientes extends javax.swing.JFrame implements WindowListener 
         }
 
         jLabel6.setText("Data de Nascimento");
-
-        try {
-            txtNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
 
         jLabel7.setText("Telefone");
 
@@ -233,6 +236,12 @@ public class TelaPacientes extends javax.swing.JFrame implements WindowListener 
             }
         });
 
+        try {
+            txtRg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("############")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -241,18 +250,20 @@ public class TelaPacientes extends javax.swing.JFrame implements WindowListener 
                 .addGap(75, 75, 75)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(177, 177, 177)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(177, 177, 177)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(txtRg, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(txtNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(74, 74, 74))
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 205, Short.MAX_VALUE)
+                                .addComponent(jLabel6)
+                                .addGap(125, 125, 125))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txtRg, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(63, 63, 63)
+                                .addComponent(dtNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(20, 20, 20)
                                 .addComponent(jLabel1)
@@ -308,10 +319,13 @@ public class TelaPacientes extends javax.swing.JFrame implements WindowListener 
                             .addComponent(jLabel6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtRg, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtNascimento))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(dtNascimento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(txtRg, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -325,7 +339,7 @@ public class TelaPacientes extends javax.swing.JFrame implements WindowListener 
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(28, 28, 28)
                                         .addComponent(jLabel7)))
-                                .addGap(4, 14, Short.MAX_VALUE)))
+                                .addGap(4, 6, Short.MAX_VALUE)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtNome, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
                             .addComponent(txtTelefone)
@@ -378,6 +392,7 @@ public class TelaPacientes extends javax.swing.JFrame implements WindowListener 
     }//GEN-LAST:event_tablePacientesMouseClicked
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        
         btnAlterar.setEnabled(false);
         btnApagar.setEnabled(false);
         btnSalvar.setEnabled(true);
@@ -385,9 +400,11 @@ public class TelaPacientes extends javax.swing.JFrame implements WindowListener 
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        if(!txtNome.getText().equals("") && !txtRg.getText().equals("") && !txtCpf.getText().equals("   .   .   -  ") && !txtNascimento.getText().equals("") && !txtTelefone.getText().equals("(  )     -    ")){
+        if(!txtNome.getText().equals("") && !txtRg.getText().equals("") && !txtCpf.getText().equals("   .   .   -  ") && !dtNascimento.getDate().equals(null) && !txtTelefone.getText().equals("(  )     -    ")){
             try {
-                int ok=controller.salvar(txtNome.getText(), txtRg.getText(), txtCpf.getText(), txtNascimento.getText(), txtTelefone.getText());
+                SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy");
+                String data=sdf.format(dtNascimento.getDate());
+                int ok=controller.salvar(txtNome.getText(), txtRg.getText(), txtCpf.getText(), data, txtTelefone.getText());
                 if(ok !=1){
                     JOptionPane.showMessageDialog(this, "Error");
                 }else{
@@ -403,9 +420,11 @@ public class TelaPacientes extends javax.swing.JFrame implements WindowListener 
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        if(!txtNome.getText().equals("") && !txtRg.getText().equals("") && !txtCpf.getText().equals("   .   .   -  ") && !txtNascimento.getText().equals("") && !txtTelefone.getText().equals("(  )     -    ")){
+        if(!txtNome.getText().equals("") && !txtRg.getText().equals("") && !txtCpf.getText().equals("   .   .   -  ") && !dtNascimento.getDate().equals(null) && !txtTelefone.getText().equals("(  )     -    ")){
             try {
-                int ok=controller.editar(Long.parseLong(txtId.getText()),txtNome.getText(), txtRg.getText(), txtCpf.getText(), txtNascimento.getText(), txtTelefone.getText());
+                SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy");
+                String data=sdf.format(dtNascimento.getDate());
+                int ok=controller.editar(Long.parseLong(txtId.getText()),txtNome.getText(), txtRg.getText(), txtCpf.getText(), data, txtTelefone.getText());
                 if(ok !=1){
                     JOptionPane.showMessageDialog(this, "Error");
                 }else{
@@ -445,6 +464,7 @@ public class TelaPacientes extends javax.swing.JFrame implements WindowListener 
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSalvar;
+    private com.toedter.calendar.JDateChooser dtNascimento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -458,9 +478,8 @@ public class TelaPacientes extends javax.swing.JFrame implements WindowListener 
     private javax.swing.JFormattedTextField txtCpf;
     private javax.swing.JTextField txtFiltro;
     private javax.swing.JTextField txtId;
-    private javax.swing.JFormattedTextField txtNascimento;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JTextField txtRg;
+    private javax.swing.JFormattedTextField txtRg;
     private javax.swing.JFormattedTextField txtTelefone;
     // End of variables declaration//GEN-END:variables
 
