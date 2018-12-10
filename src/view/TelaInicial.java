@@ -6,6 +6,8 @@
 package view;
 
 import controller.ConsultaController;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -22,7 +24,7 @@ import model.Usuario;
  *
  * @author computador
  */
-public class TelaInicial extends javax.swing.JFrame {
+public class TelaInicial extends javax.swing.JFrame implements WindowListener{
 
     /**
      * Creates new form TelaInicial
@@ -32,6 +34,7 @@ public class TelaInicial extends javax.swing.JFrame {
     public TelaInicial(Usuario usuario) {
         initComponents();
         this.usuario = usuario;
+        this.addWindowListener(this);
         setTitle("App Clínica");
         Relogio relogio=new Relogio(lblHora);
         Thread t1=new Thread(relogio);
@@ -285,4 +288,39 @@ public class TelaInicial extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuUsuarios;
     private javax.swing.JTable tbConsultasHoje;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+        
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+        
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+        
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+        atualizaTabela();
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+        
+    }
 }

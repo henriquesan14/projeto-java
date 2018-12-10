@@ -400,23 +400,27 @@ public class TelaPacientes extends javax.swing.JFrame implements WindowListener 
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        if(!txtNome.getText().equals("") && !txtRg.getText().equals("") && !txtCpf.getText().equals("   .   .   -  ") && !dtNascimento.getDate().equals(null) && !txtTelefone.getText().equals("(  )     -    ")){
-            try {
-                SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy");
-                String data=sdf.format(dtNascimento.getDate());
-                int ok=controller.salvar(txtNome.getText(), txtRg.getText(), txtCpf.getText(), data, txtTelefone.getText());
-                if(ok !=1){
-                    JOptionPane.showMessageDialog(this, "Error");
-                }else{
-                    JOptionPane.showMessageDialog(this, "Paciente Salvo");
-                } 
-            } catch (ParseException ex) {
-                JOptionPane.showMessageDialog(this,"Data inválida");
+        try{
+            if(!txtNome.getText().equals("") && !txtRg.getText().equals("") && !txtCpf.getText().equals("   .   .   -  ") && !dtNascimento.getDate().equals(null) && !txtTelefone.getText().equals("(  )     -    ")){
+                try {
+                    SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy");
+                    String data=sdf.format(dtNascimento.getDate());
+                    int ok=controller.salvar(txtNome.getText(), txtRg.getText(), txtCpf.getText(), data, txtTelefone.getText());
+                    if(ok !=1){
+                        JOptionPane.showMessageDialog(this, "Error");
+                    }else{
+                        JOptionPane.showMessageDialog(this, "Paciente Salvo");
+                    } 
+                } catch (ParseException ex) {
+                    JOptionPane.showMessageDialog(this,"Data inválida");
+                }
+            }else{
+                JOptionPane.showMessageDialog(this,"Campo(s) vazio(s)");
             }
-        }else{
-            JOptionPane.showMessageDialog(this,"Campo(s) vazio(s)");
+            atualizaTabela();
+        }catch(NullPointerException e){
+            JOptionPane.showMessageDialog(this,"Campo de data inválido");
         }
-        atualizaTabela();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed

@@ -5,6 +5,7 @@
  */
 package dao;
 
+import java.util.Date;
 import java.util.List;
 import model.Consulta;
 
@@ -18,6 +19,6 @@ public interface ConsultaDao {
     int excluir(Long id);
     List<Consulta> buscar();
     List<Consulta> buscarPorPaciente(String nome);
-    int verifica(String data,String turno,Long id);
+    int verifica(Date data,String turno,Long id);
     List<Consulta> consultasHoje();
 }

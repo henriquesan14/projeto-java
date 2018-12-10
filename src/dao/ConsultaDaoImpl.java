@@ -215,12 +215,12 @@ public class ConsultaDaoImpl implements ConsultaDao {
 	    return consultas; //To change body of generated methods, choose Tools | Templates.
     }
     
-    public int verifica(String data,String turno,Long idMedico){
+    public int verifica(Date data,String turno,Long idMedico){
         String sql="SELECT COUNT(*) FROM consulta WHERE data_consulta= ? and turno=? and id_medico_fk=? ";
         PreparedStatement ps;
 	    try(Connection conn = new ConnectionFactory().getConnection()){
 	        ps = conn.prepareStatement(sql);
-                ps.setString(1,data);
+                ps.setObject(1,data);
                 ps.setString(2,turno );
                 ps.setLong(3,idMedico);
 	        ResultSet rs = ps.executeQuery();

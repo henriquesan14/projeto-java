@@ -423,6 +423,7 @@ public class TelaConsultas extends javax.swing.JFrame implements WindowListener 
 
     @Override
     public void windowClosed(WindowEvent e) {
+        
         janela.setEnabled(true);
     }
 
