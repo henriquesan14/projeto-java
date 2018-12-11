@@ -24,15 +24,20 @@ public class TelaMedicos extends javax.swing.JFrame implements WindowListener {
      * Creates new form telaPacientes
      */
     JFrame janela;
+    Usuario usuario;
     MedicoController controller= new MedicoController();
-    public TelaMedicos(JFrame janela) {
+    public TelaMedicos(JFrame janela,Usuario usuario) {
         initComponents();
         this.janela = janela;
+        this.usuario=usuario;
         this.addWindowListener(this);
         janela.setEnabled(false);
         atualizaTabela();
         btnAlterar.setEnabled(false);
         btnApagar.setEnabled(false);
+        if(!usuario.getRole().equals("admin")){
+            btnApagar.setVisible(false);
+        }
     }
     
     public void atualizaTabela(){

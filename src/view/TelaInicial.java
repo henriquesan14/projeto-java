@@ -232,7 +232,7 @@ public class TelaInicial extends javax.swing.JFrame implements WindowListener{
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void menuMedicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMedicosActionPerformed
-        new TelaMedicos(this).setVisible(true);
+        new TelaMedicos(this,usuario).setVisible(true);
     }//GEN-LAST:event_menuMedicosActionPerformed
 
     private void menuSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSairActionPerformed
@@ -249,7 +249,7 @@ public class TelaInicial extends javax.swing.JFrame implements WindowListener{
 
     private void menuPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPacientesActionPerformed
         try {
-            new TelaPacientes(this).setVisible(true);
+            new TelaPacientes(this,usuario).setVisible(true);
         } catch (ParseException ex) {
             Logger.getLogger(TelaInicial.class.getName()).log(Level.SEVERE, null, ex);
         }

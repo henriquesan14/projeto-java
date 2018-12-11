@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Paciente;
+import model.Usuario;
 
 /**
  *
@@ -28,15 +29,20 @@ public class TelaPacientes extends javax.swing.JFrame implements WindowListener 
      * Creates new form telaPacientes
      */
     JFrame janela;
+    Usuario usuario;
     PacienteController controller=new PacienteController();
-    public TelaPacientes(JFrame janela) throws ParseException {
+    public TelaPacientes(JFrame janela,Usuario usuario) throws ParseException {
         initComponents();
         atualizaTabela();
+        this.usuario=usuario;
         btnAlterar.setEnabled(false);
         btnApagar.setEnabled(false);
         this.janela=janela;
         this.addWindowListener(this);
         janela.setEnabled(false);
+        if(!usuario.getRole().equals("admin")){
+            btnApagar.setVisible(false);
+        }
     }
     
     public void atualizaTabela(){

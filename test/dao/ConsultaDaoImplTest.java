@@ -63,9 +63,7 @@ public class ConsultaDaoImplTest {
     @Test
     public void verifica(){
         Date date=new Date();
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-        String data=sdf.format(date);
-        System.out.println(dao.verifica(data, "Manhã", 7l));
+        System.out.println(dao.verifica(date, "Manhã", 7l));
         //System.out.println(dao.verifica(c));
     }
     

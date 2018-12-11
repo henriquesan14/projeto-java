@@ -57,7 +57,9 @@ public class TelaConsultas extends javax.swing.JFrame implements WindowListener 
         this.janela=janela;
         this.addWindowListener(this);
         janela.setEnabled(false);
-        
+        if(!usuario.getRole().equals("admin")){
+            btnApagar.setVisible(false);
+        }
         
     }
     
